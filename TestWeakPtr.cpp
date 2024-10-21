@@ -2,7 +2,6 @@
 #include "SharedPtr.h"
 #include "TestWeakPtr.h"
 #include <cassert>
-#include <iostream>
 
 void TestWeakPtr::testClass() {
     testConstructors();

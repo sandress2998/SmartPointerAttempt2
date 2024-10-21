@@ -1,6 +1,5 @@
 #pragma once
 #include "SharedPtr.h"
-#include <iostream>
 
 template <typename T>
 class WeakPtr {

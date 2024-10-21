@@ -1,6 +1,5 @@
 #pragma once
 #include <stddef.h>
-#include <iostream>
 
 template <typename T>
 class SharedPtr {
