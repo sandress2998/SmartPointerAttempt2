@@ -1,6 +1,4 @@
 #pragma once
-#include <iostream>
-#include "SharedPtr.h"
 
 template <class T>
 class Sequence {

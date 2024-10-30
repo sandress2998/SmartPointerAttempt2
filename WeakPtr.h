@@ -1,6 +1,7 @@
 #pragma once
 #include "SharedPtr.h"
 #include <stdexcept>
+#include <type_traits>
 
 template <typename T>
 class WeakPtr {
@@ -33,24 +34,6 @@ public:
         }
     }
 
-// кажется, эта функция никогда не используется
-/*
-    template <typename U>
-    WeakPtr<T>& operator=(const SharedPtr<U>& other) {
-        if (std::is_base_of<T, U>::value) {
-            --(controlBlock->weakCount);
-            if (controlBlock->weakCount <= 0 && controlBlock->sharedCount <= 0) {
-                delete controlBlock;
-            }
-            ptr = other.ptr;
-            controlBlock = other.controlBlock;
-            ++(controlBlock->weakCount);
-            return *this;
-        } else {
-            throw std::invalid_argument("");
-        }
-    }
-*/
     template <typename U>
     WeakPtr<T>& operator=(const WeakPtr<U>& other) {
         if (std::is_base_of<T, U>::value) {
@@ -98,3 +81,22 @@ public:
     }
 
 };
+
+// кажется, эта функция никогда не используется
+/*
+    template <typename U>
+    WeakPtr<T>& operator=(const SharedPtr<U>& other) {
+        if (std::is_base_of<T, U>::value) {
+            --(controlBlock->weakCount);
+            if (controlBlock->weakCount <= 0 && controlBlock->sharedCount <= 0) {
+                delete controlBlock;
+            }
+            ptr = other.ptr;
+            controlBlock = other.controlBlock;
+            ++(controlBlock->weakCount);
+            return *this;
+        } else {
+            throw std::invalid_argument("");
+        }
+    }
+*/

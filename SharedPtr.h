@@ -2,7 +2,6 @@
 #include <stddef.h>
 #include <type_traits>
 #include <stdexcept>
-#include <iostream>
 
 struct ControlBlock {
     ControlBlock(size_t sharedCount, size_t weakCount): sharedCount(sharedCount), weakCount(weakCount) {}
