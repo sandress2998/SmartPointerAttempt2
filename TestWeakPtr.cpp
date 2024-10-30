@@ -1,6 +1,7 @@
 #include "WeakPtr.h"
 #include "SharedPtr.h"
 #include "TestWeakPtr.h"
+#include "Person.h"
 #include <cassert>
 
 void TestWeakPtr::testClass() {
@@ -12,8 +13,8 @@ void TestWeakPtr::testClass() {
 }
 
 void TestWeakPtr::testConstructors() {
-    TestWeakPtr::testConstructorCopy();
-    TestWeakPtr::testConstructorWithSharedPtr();
+    testConstructorCopy();
+    testConstructorWithSharedPtr();
 }
 
 void TestWeakPtr::testConstructorWithSharedPtr() {
@@ -40,6 +41,10 @@ void TestWeakPtr::testConstructorCopy() {
 }
 
 void TestWeakPtr::testAssignOperator() {
+    testAssignOperatorDefault();
+}
+
+void TestWeakPtr::testAssignOperatorDefault() {
     int newElem = 2 * elem;
     SharedPtr<int> sharedPtr(new int(elem));
     WeakPtr<int> weakPtr(sharedPtr);

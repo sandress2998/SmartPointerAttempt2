@@ -8,12 +8,15 @@ struct TestUniquePtr {
     void testConstructors();
     void testConstructorWithPtr();
     void testConstructorMove();
+    void testConstructorWithInheritance();
 
     void testGet();
     void testGetNaked();
     void testGetWithMakeUnique();
 
     void testAssignMoveSemantics();
+    void testAssignMoveSemanticsDefault();
+    void testAssignMoveSemanticsWithInheritance();
 
     void testReset();
     void testResetWithNewObject();

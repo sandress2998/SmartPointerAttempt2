@@ -1,7 +1,9 @@
 #include "SharedPtr.h"
 #include "WeakPtr.h"
 #include "TestSharedPtr.h"
+#include "Person.h"
 #include <cassert>
+
 
 void TestSharedPtr::testClass() {
     testConstructors();
@@ -9,12 +11,14 @@ void TestSharedPtr::testClass() {
     testGet();
     testAssignOperator();
     testDeferenceOperator();
+
 }
 
 void TestSharedPtr::testConstructors() {
     TestSharedPtr::testConstructorWithPtr();
     TestSharedPtr::testConstructorWithMakeShared();
     TestSharedPtr::testConstructorCopy();
+    TestSharedPtr::testConstructorWithInherirance();
 }
 
 void TestSharedPtr::testConstructorWithPtr() {
@@ -35,6 +39,12 @@ void TestSharedPtr::testConstructorCopy() {
     assert(*(ptr.get()) == elem);
     assert(*(other.get()) == elem);
     assert(ptr.getSharedPointersQuantity() == 2);
+}
+
+void TestSharedPtr::testConstructorWithInherirance() {
+    SharedPtr<Student> student = makeShared<Student>();
+    SharedPtr<Person> person(student);
+    assert(student.getSharedPointersQuantity() == 2);
 }
 
 void TestSharedPtr::testControlBlock() {
@@ -66,6 +76,11 @@ void TestSharedPtr::testGet() {
 }
 
 void TestSharedPtr::testAssignOperator() {
+    testAssignOperatorDefault();
+    testAssignOperatorWithInheritance();
+}
+
+void TestSharedPtr::testAssignOperatorDefault() {
     int newElem = elem * 2;
     SharedPtr<int> ptr(new int(elem));
     SharedPtr<int> other(new int(newElem));
@@ -78,7 +93,13 @@ void TestSharedPtr::testAssignOperator() {
     assert(other.getSharedPointersQuantity() == 1);
 }
 
+void TestSharedPtr::testAssignOperatorWithInheritance() {
+    SharedPtr<Student> student = makeShared<Student>();
+    SharedPtr<Person> person = student;
+    assert(student.getSharedPointersQuantity() == 2);
+}
+
 void TestSharedPtr::testDeferenceOperator() {
-    SharedPtr<int> ptr(new int(elem));
-    assert(*ptr == elem);
+    SharedPtr<int> ptr2 = makeShared<int>(elem);
+    assert(*ptr2 == elem);
 }

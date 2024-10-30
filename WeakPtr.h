@@ -1,17 +1,27 @@
 #pragma once
 #include "SharedPtr.h"
+#include <stdexcept>
 
 template <typename T>
 class WeakPtr {
 private:
     T* ptr;
-    typename SharedPtr<T>::ControlBlock* controlBlock;
+    ControlBlock* controlBlock;
 public:
-    WeakPtr(): ptr(nullptr), controlBlock(new typename SharedPtr<T>::ControlBlock(0, 0)) {}
+    WeakPtr(): ptr(nullptr), controlBlock(new ControlBlock(0, 0)) {}
     WeakPtr(const SharedPtr<T>& other): ptr(other.ptr), controlBlock(other.controlBlock) {
         ++(controlBlock->weakCount);
     }
     WeakPtr(const WeakPtr<T>& other): ptr(other.ptr), controlBlock(other.controlBlock) {
+        ++(controlBlock->weakCount);
+    }
+
+    template <typename U>
+    WeakPtr(const WeakPtr<U>& other) {
+        if (std::is_base_of<T, U>::value) {
+            ptr = other.ptr;
+            controlBlock = other.controlBlock;
+        }
         ++(controlBlock->weakCount);
     }
 
@@ -23,20 +33,43 @@ public:
         }
     }
 
-    WeakPtr<T>& operator=(const SharedPtr<T>& other) {
-        --(controlBlock->weakCount);
-        if (controlBlock->weakCount <= 0 && controlBlock->sharedCount <= 0) {
-            delete controlBlock;
+// кажется, эта функция никогда не используется
+/*
+    template <typename U>
+    WeakPtr<T>& operator=(const SharedPtr<U>& other) {
+        if (std::is_base_of<T, U>::value) {
+            --(controlBlock->weakCount);
+            if (controlBlock->weakCount <= 0 && controlBlock->sharedCount <= 0) {
+                delete controlBlock;
+            }
+            ptr = other.ptr;
+            controlBlock = other.controlBlock;
+            ++(controlBlock->weakCount);
+            return *this;
+        } else {
+            throw std::invalid_argument("");
         }
-        ptr = other.ptr;
-        controlBlock = other.controlBlock;
-        ++(controlBlock->weakCount);
-        return *this;
+    }
+*/
+    template <typename U>
+    WeakPtr<T>& operator=(const WeakPtr<U>& other) {
+        if (std::is_base_of<T, U>::value) {
+            --(controlBlock->weakCount);
+
+            if (controlBlock->weakCount <= 0 && controlBlock->sharedCount <= 0) {
+                delete controlBlock;
+            }
+            ptr = other.ptr;
+            controlBlock = other.controlBlock;
+            ++(controlBlock->weakCount);
+            return *this;
+        } else {
+            throw std::invalid_argument();
+        }
     }
 
     WeakPtr<T>& operator=(const WeakPtr<T>& other) {
         --(controlBlock->weakCount);
-
         if (controlBlock->weakCount <= 0 && controlBlock->sharedCount <= 0) {
             delete controlBlock;
         }

@@ -1,5 +1,6 @@
 #include "UniquePtr.h"
 #include "TestUniquePtr.h"
+#include "Person.h"
 #include <cassert>
 #include <utility>
 
@@ -13,8 +14,9 @@ void TestUniquePtr::testClass() {
 }
 
 void TestUniquePtr::testConstructors() {
-    TestUniquePtr::testConstructorWithPtr();
-    TestUniquePtr::testConstructorMove();
+    testConstructorWithPtr();
+    testConstructorMove();
+    testAssignMoveSemanticsWithInheritance();
 }
 
 void TestUniquePtr::testConstructorWithPtr() {
@@ -46,11 +48,23 @@ void TestUniquePtr::testGetWithMakeUnique() {
 }
 
 void TestUniquePtr::testAssignMoveSemantics() {
+    testAssignMoveSemanticsDefault();
+    testAssignMoveSemanticsWithInheritance();
+}
+
+void TestUniquePtr::testAssignMoveSemanticsDefault() {
     UniquePtr<int> ptr = makeUnique<int>(elem);
     UniquePtr<int> other = UniquePtr<int>(nullptr);
     other = std::move(ptr);
     assert(ptr.get() == nullptr);
     assert(*(other.get()) == elem);
+}
+
+void TestUniquePtr::testAssignMoveSemanticsWithInheritance() {
+    UniquePtr<Student> ptr = makeUnique<Student>();
+    UniquePtr<Person> other = makeUnique<Person>();
+    other = std::move(ptr);
+    assert(ptr.get() == nullptr);
 }
 
 void TestUniquePtr::testReset() {

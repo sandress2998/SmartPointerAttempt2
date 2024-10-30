@@ -10,6 +10,8 @@ struct TestWeakPtr {
     void testConstructorWithSharedPtr();
 
     void testAssignOperator();
+    void testAssignOperatorDefault();
+    void testAssignOperatorWithInheritance();
 
     void testLock();
     

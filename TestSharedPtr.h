@@ -9,6 +9,7 @@ struct TestSharedPtr {
     void testConstructorWithPtr();
     void testConstructorCopy();
     void testConstructorWithMakeShared();
+    void testConstructorWithInherirance();
 
     void testControlBlock();
     void testControlBlockNaked();
@@ -17,6 +18,8 @@ struct TestSharedPtr {
     void testGet();
 
     void testAssignOperator();
+    void testAssignOperatorDefault();
+    void testAssignOperatorWithInheritance();
 
     void testDeferenceOperator();
 };

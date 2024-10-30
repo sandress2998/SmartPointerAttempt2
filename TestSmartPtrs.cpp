@@ -5,41 +5,17 @@
 
 void TestSmartPtrs::testSharedPtr() {
     TestSharedPtr testSharedPtr;
-    testSharedPtr.testConstructors();
-    testSharedPtr.testConstructorWithPtr();
-    testSharedPtr.testConstructorCopy();
-    testSharedPtr.testConstructorWithMakeShared();
-    testSharedPtr.testControlBlock();
-    testSharedPtr.testControlBlockNaked();
-    testSharedPtr.testControlBlockWithMakedShared();
-    testSharedPtr.testGet();
-    testSharedPtr.testAssignOperator();
-    testSharedPtr.testDeferenceOperator();
+    testSharedPtr.testClass();
 }
 
 void TestSmartPtrs::testUniquePtr() {
     TestUniquePtr testUniquePtr;
-    testUniquePtr.testConstructors();
-    testUniquePtr.testConstructorWithPtr();
-    testUniquePtr.testConstructorMove();
-    testUniquePtr.testGet();
-    testUniquePtr.testGetNaked();
-    testUniquePtr.testGetWithMakeUnique();
-    testUniquePtr.testAssignMoveSemantics();
-    testUniquePtr.testReset();
-    testUniquePtr.testResetWithNewObject();
-    testUniquePtr.testDeferenceOperator();
+    testUniquePtr.testClass();
 }
 
 void TestSmartPtrs::testWeakPtr() {
     TestWeakPtr testWeakPtr;
-    testWeakPtr.testConstructors();
-    testWeakPtr.testConstructorCopy();
-    testWeakPtr.testConstructorWithSharedPtr();
-    testWeakPtr.testAssignOperator();
-    testWeakPtr.testLock();
-    testWeakPtr.testCirclePtrs();
-    testWeakPtr.testExpired();
+    testWeakPtr.testClass();
 }
 
 void TestSmartPtrs::testAllPtrs() {
